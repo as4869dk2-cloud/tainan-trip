@@ -24,6 +24,15 @@
     .budget-row { display:flex; justify-content:space-between; gap:12px; border-bottom:1px dashed var(--line); padding:5px 0; }
     .budget-row span:last-child { color:var(--accent); font-weight:700; white-space:nowrap; }
     .budget-total { margin-top:10px !important; color:var(--accent); font-weight:700; }
+    .snack-list { margin:12px 0 4px; border:1px solid var(--line); border-radius:12px; background:#fffaf0; }
+    .snack-list summary { padding:10px 12px; color:var(--accent); font-weight:700; cursor:pointer; }
+    .snack-list[open] summary { border-bottom:1px dashed var(--line); }
+    .snack { display:grid; grid-template-columns:1fr auto; gap:4px 10px; padding:10px 12px; border-bottom:1px dashed var(--line); }
+    .snack:last-child { border-bottom:0; }
+    .snack img { grid-column:1 / -1; width:100%; height:120px; object-fit:cover; border-radius:10px; display:block; }
+    .snack strong { font-size:.95rem; }
+    .snack small { grid-column:1 / -1; color:var(--muted); font-size:.82rem; }
+    .snack-map { align-self:center; border:1px solid var(--accent); border-radius:999px; padding:4px 8px; background:transparent; color:var(--accent); font:inherit; font-size:.75rem; cursor:pointer; }
     .days { display:grid; gap:16px; margin-top:20px; }
     .day { background:var(--paper); border:1px solid var(--line); border-radius:18px; padding:20px 16px 8px; box-shadow:0 4px 14px #4b3b2a0b; }
     .day-head { display:flex; align-items:baseline; justify-content:space-between; gap:12px; border-bottom:1px solid var(--line); padding:0 4px 10px; }
@@ -107,6 +116,7 @@
         <div class="stop"><time>17:00</time><div><p class="place">東京車站</p><p class="note">欣賞紅磚車站外觀，順便熟悉周邊街區。</p><p class="note">交通：JR 線或步行</p></div></div>
         <div class="stop"><time>19:00</time><div><p class="place">銀平 KITTE 丸之內店</p><p class="note">品嚐和歌山風魚料理、刺身與海鮮御膳，作為第一頓東京晚餐。</p><p class="note">交通：東京 Metro 丸之內線，東京站下車後步行約 1 分鐘</p></div></div>
       </article>
+      <details class="snack-list"><summary>🍪 下午茶／小吃口袋名單</summary><div class="snack"><strong>PARIS BUTTER CHOCOLAT</strong><button class="snack-map" type="button" data-place="PARIS BUTTER CHOCOLAT 東京駅">地圖</button><small>東京站 Gransta｜奶油巧克力點心，適合外帶｜約 ¥1,000～</small></div><div class="snack"><strong>バターステイツ by 銀のぶどう</strong><button class="snack-map" type="button" data-place="バターステイツ by 銀のぶどう 大丸東京店">地圖</button><small>大丸東京店｜伴手禮甜點｜約 ¥1,000～</small></div></details>
 
       <article class="day">
         <div class="day-head"><h2>Day 2｜淺草・晴空塔</h2><span class="date">下町散步</span></div>
@@ -115,6 +125,7 @@
         <div class="stop"><time>15:00</time><div><p class="place">東京晴空塔</p><p class="note">登塔看城市全景，晴天可遠眺富士山方向。</p><p class="note">交通：東武晴空塔線，東京晴空塔站下車</p></div></div>
         <div class="stop"><time>18:30</time><div><p class="place">すしざんまい 東京スカイツリータウン・ソラマチ店</p><p class="note">用江戶前壽司與新鮮海鮮收尾，吃完還能繼續逛晴空塔城。</p><p class="note">交通：從東京晴空塔步行</p></div></div>
       </article>
+      <details class="snack-list"><summary>🍓 下午茶／小吃口袋名單</summary><div class="snack"><img src="images/asakusa-food.jpg" alt="壽司與海鮮料理示意圖片"><strong>淺草うなな</strong><button class="snack-map" type="button" data-place="淺草うなな">地圖</button><small>國產鰻魚燒飯糰｜適合邊走邊吃｜約 ¥500～（圖片為料理示意）</small></div><div class="snack"><strong>淺草そらつき</strong><button class="snack-map" type="button" data-place="淺草そらつき 本店">地圖</button><small>草莓糰子、草莓銅鑼燒｜雷門附近｜約 ¥300～</small></div></details>
 
       <article class="day">
         <div class="day-head"><h2>Day 3｜上野・秋葉原</h2><span class="date">文化與次文化</span></div>
@@ -123,6 +134,7 @@
         <div class="stop"><time>15:00</time><div><p class="place">秋葉原電器街</p><p class="note">探索電玩、動漫與特色店舖，逛街時間彈性安排。</p><p class="note">交通：JR 山手線，上野站至秋葉原站</p></div></div>
         <div class="stop"><time>19:00</time><div><p class="place">麵屋武藏 武仁</p><p class="note">以濃厚湯頭與招牌大塊「武仁肉」拉麵，體驗秋葉原的人氣麵食。</p><p class="note">交通：JR 秋葉原站昭和通口步行約 3 分鐘</p></div></div>
       </article>
+      <details class="snack-list"><summary>🍜 下午茶／小吃口袋名單</summary><div class="snack"><strong>らぁめん千寿</strong><button class="snack-map" type="button" data-place="らぁめん千寿 上野">地圖</button><small>札幌味噌拉麵｜上野周邊熱食選擇｜約 ¥1,000～</small></div><div class="snack"><strong>串かつ酒場 ひろかつ</strong><button class="snack-map" type="button" data-place="串かつ酒場 ひろかつ 上野アメ横店">地圖</button><small>串炸與小菜｜阿美橫町附近｜約 ¥1,500～</small></div></details>
 
       <article class="day">
         <div class="day-head"><h2>Day 4｜明治神宮・澀谷</h2><span class="date">東京流行地標</span></div>
@@ -131,6 +143,7 @@
         <div class="stop"><time>14:00</time><div><p class="place">まい泉 青山本店</p><p class="note">在老字號日式炸豬排店享用酥脆豬排與定食，位置靠近表參道。</p><p class="note">交通：從表參道站步行約 5–8 分鐘</p></div></div>
         <div class="stop"><time>17:00</time><div><p class="place">澀谷十字路口・SHIBUYA SKY</p><p class="note">從高處看澀谷街景，再到十字路口感受人潮。</p><p class="note">交通：東京 Metro 半藏門線，表參道站至澀谷站</p></div></div>
       </article>
+      <details class="snack-list"><summary>🥞 下午茶／小吃口袋名單</summary><div class="snack"><img src="images/dessert.jpg" alt="甜點示意圖片"><strong>Rainbow Pancake</strong><button class="snack-map" type="button" data-place="Rainbow Pancake 原宿">地圖</button><small>人氣鬆餅｜適合坐下來休息｜約 ¥1,500～（圖片為甜點示意）</small></div><div class="snack"><strong>CHAVATY</strong><button class="snack-map" type="button" data-place="CHAVATY 表參道">地圖</button><small>奶茶與抹茶甜點｜表參道散步順路｜約 ¥800～</small></div></details>
 
       <article class="day">
         <div class="day-head"><h2>Day 5｜築地・銀座</h2><span class="date">美食與購物</span></div>
@@ -139,6 +152,7 @@
         <div class="stop"><time>14:30</time><div><p class="place">すしざんまい 本店</p><p class="note">到築地老字號壽司店品嚐鮪魚與江戶前壽司，再前往銀座購物。</p><p class="note">交通：東京 Metro 日比谷線至築地站，再步行約 3 分鐘</p></div></div>
         <div class="stop"><time>18:30</time><div><p class="place">鳥ぎん 銀座本店</p><p class="note">品嚐備長炭燒鳥與現點現炊的釜飯，感受銀座老店的傳統味道。</p><p class="note">交通：從歌舞伎座步行，或銀座站 A5 出口步行</p></div></div>
       </article>
+      <details class="snack-list"><summary>🍵 下午茶／小吃口袋名單</summary><div class="snack"><img src="images/matcha.jpg" alt="抹茶飲品示意圖片"><strong>Matcha Stand IPPUKU -wabisabi-</strong><button class="snack-map" type="button" data-place="Matcha Stand IPPUKU 築地店">地圖</button><small>抹茶拿鐵與抹茶甜點｜築地散步途中｜約 ¥700～（圖片為飲品示意）</small></div><div class="snack"><strong>銀座風香</strong><button class="snack-map" type="button" data-place="銀座風香 Matcha Kakigori">地圖</button><small>抹茶與刨冰｜前往銀座時可安排｜約 ¥1,000～</small></div></details>
 
       <article class="day">
         <div class="day-head"><h2>Day 6｜吉祥寺・中目黑</h2><span class="date">生活感散步</span></div>
@@ -147,6 +161,7 @@
         <div class="stop"><time>15:30</time><div><p class="place">中目黑・代官山</p><p class="note">沿目黑川散步，看選物店與特色咖啡店。</p><p class="note">交通：JR 山手線至惠比壽站，再步行或轉東急東橫線</p></div></div>
         <div class="stop"><time>19:00</time><div><p class="place">たつや 駅前店</p><p class="note">在惠比壽老牌居酒屋吃炭火燒鳥、串燒，感受上班族下班後的熱鬧氣氛。</p><p class="note">交通：JR 惠比壽站東口步行約 2 分鐘</p></div></div>
       </article>
+      <details class="snack-list"><summary>🍠 下午茶／小吃口袋名單</summary><div class="snack"><img src="images/dessert.jpg" alt="地瓜甜點示意圖片"><strong>&amp; OIMO TOKYO CAFE 中目黑店</strong><button class="snack-map" type="button" data-place="& OIMO TOKYO CAFE 中目黒店">地圖</button><small>蜜芋布丁與地瓜甜點｜中目黑散步順路｜約 ¥800～（圖片為甜點示意）</small></div><div class="snack"><strong>Princess Tart 中目黑</strong><button class="snack-map" type="button" data-place="Princess Tart 中目黒">地圖</button><small>季節水果塔｜適合外帶或短暫休息｜約 ¥1,000～</small></div></details>
 
       <article class="day">
         <div class="day-head"><h2>Day 7｜台場・東京灣</h2><span class="date">海灣夜景</span></div>
@@ -155,6 +170,7 @@
         <div class="stop"><time>15:00</time><div><p class="place">teamLab Borderless：示意</p><p class="note">安排沉浸式展覽體驗，預留充足參觀時間。</p><p class="note">交通：百合海鷗線至青海站，再步行</p></div></div>
         <div class="stop"><time>19:00</time><div><p class="place">東京灣夜景</p><p class="note">找個看得到夜景的位置，享受旅程最後一晚。</p><p class="note">交通：百合海鷗線至台場站，再步行</p></div></div>
       </article>
+      <details class="snack-list"><summary>🍨 下午茶／小吃口袋名單</summary><div class="snack"><strong>Aqua City Odaiba 甜點／咖啡</strong><button class="snack-map" type="button" data-place="Aqua City Odaiba">地圖</button><small>依當天想吃的咖啡、冰品或甜點彈性選擇｜約 ¥600～</small></div></details>
 
       <article class="day">
         <div class="day-head"><h2>Day 8｜返程</h2><span class="date">最後採買</span></div>
@@ -203,6 +219,15 @@
         dialog.showModal();
       });
       stop.querySelector('div').append(button);
+    });
+    document.querySelectorAll('.snack-map').forEach((button) => {
+      button.addEventListener('click', () => {
+        title.textContent = button.dataset.place;
+        transport.textContent = '下午茶／小吃口袋名單';
+        const query = encodeURIComponent(`${button.dataset.place} 東京`);
+        map.src = `https://www.google.com/maps?q=${query}&output=embed`;
+        dialog.showModal();
+      });
     });
     document.querySelector('.guide-close').addEventListener('click', () => dialog.close());
     dialog.addEventListener('click', (event) => { if (event.target === dialog) dialog.close(); });
