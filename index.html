@@ -287,7 +287,7 @@
       applyTodayFilter();
     });
     applyTodayFilter();
-    const supabase = window.supabase.createClient(
+    const supabaseClient = window.supabase.createClient(
       'https://hffpxtjnspvaoxqxchhd.supabase.co',
       'sb_publishable_43JHIjfKRo34bxCumOKbyQ_ElvkccLS'
     );
@@ -304,19 +304,19 @@
       }));
     };
     const loadVotes = async () => {
-      const { data, error } = await supabase.from('dinner_votes').select('option');
+      const { data, error } = await supabaseClient.from('dinner_votes').select('option');
       if (error) { voteStatus.textContent = '票數載入失敗，請稍後再試。'; return; }
       renderVotes(data);
     };
     loadVotes();
-    supabase.channel('dinner-votes').on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'dinner_votes' }, loadVotes).subscribe();
+    supabaseClient.channel('dinner-votes').on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'dinner_votes' }, loadVotes).subscribe();
     document.querySelector('#dinner-vote-form').addEventListener('submit', async (event) => {
       event.preventDefault();
       const form = event.currentTarget;
       const button = form.querySelector('button');
       button.disabled = true;
       voteStatus.textContent = '送出中⋯';
-      const { error } = await supabase.from('dinner_votes').insert({ nickname: form.nickname.value.trim(), option: form.option.value });
+      const { error } = await supabaseClient.from('dinner_votes').insert({ nickname: form.nickname.value.trim(), option: form.option.value });
       button.disabled = false;
       if (error) { voteStatus.textContent = '投票失敗，請確認暱稱後再試。'; return; }
       form.reset();
@@ -337,15 +337,15 @@
       checksByStop.set(stopId, checkbox);
       checkbox.addEventListener('change', async () => {
         const checked = checkbox.checked;
-        const { error } = await supabase.from('trip_stop_checks').upsert({ stop_id: stopId, checked, updated_at: new Date().toISOString() });
+        const { error } = await supabaseClient.from('trip_stop_checks').upsert({ stop_id: stopId, checked, updated_at: new Date().toISOString() });
         if (error) checkbox.checked = !checked;
       });
       stop.querySelector('.place')?.prepend(checkbox);
     });
     (async () => {
-      const { data, error } = await supabase.from('trip_stop_checks').select('stop_id, checked');
+      const { data, error } = await supabaseClient.from('trip_stop_checks').select('stop_id, checked');
       if (!error) data.forEach(({ stop_id, checked }) => updateCheckbox(stop_id, checked));
-      supabase.channel('shared-trip-stop-checks').on('postgres_changes', { event: '*', schema: 'public', table: 'trip_stop_checks' }, ({ new: row }) => {
+      supabaseClient.channel('shared-trip-stop-checks').on('postgres_changes', { event: '*', schema: 'public', table: 'trip_stop_checks' }, ({ new: row }) => {
         if (row?.stop_id) updateCheckbox(row.stop_id, row.checked);
       }).subscribe();
     })();
