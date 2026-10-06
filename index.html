@@ -300,7 +300,7 @@
     const todayToggle = document.querySelector('#today-toggle');
     const todayProgress = document.querySelector('#today-progress');
     const savedDay = localStorage.getItem('tokyo-trip-day') || '1';
-    const savedTodayOnly = localStorage.getItem('tokyo-trip-today-only') === 'true';
+    const savedTodayOnly = localStorage.getItem('tokyo-trip-today-only') === 'true' || (localStorage.getItem('tokyo-trip-today-only') === null && window.matchMedia('(max-width: 559px)').matches);
     todayDay.value = savedDay;
     const applyTodayFilter = () => {
       const onlyToday = todayToggle.getAttribute('aria-pressed') === 'true';
