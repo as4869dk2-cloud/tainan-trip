@@ -35,6 +35,18 @@
     .budget-row { display:flex; justify-content:space-between; align-items:baseline; gap:12px; border-bottom:1px dashed color-mix(in srgb,var(--color-text) 16%,var(--color-background)); padding:8px 0; }
     .budget-row span:last-child { color:var(--color-primary); font-weight:700; white-space:nowrap; }
     .budget-total { margin-top:10px !important; color:var(--color-primary); font-weight:700; }
+    .dinner-vote { margin-top:20px; padding:18px; background:var(--color-background); border:1px solid color-mix(in srgb,var(--color-text) 16%,var(--color-background)); border-radius:16px; box-shadow:0 4px 14px color-mix(in srgb,var(--color-text) 8%,transparent); }
+    .dinner-vote h2 { margin:0 0 8px; }
+    .dinner-vote form { display:grid; gap:10px; }
+    .dinner-vote label { font-weight:700; }
+    .dinner-vote input, .dinner-vote select, .dinner-vote button { min-height:42px; padding:7px 12px; border:1px solid var(--color-primary); border-radius:10px; background:var(--color-background); color:var(--color-text); font:inherit; font-size:17px; }
+    .dinner-vote button { cursor:pointer; color:var(--color-background); background:var(--color-primary); }
+    .dinner-vote button:disabled { opacity:.6; cursor:wait; }
+    .vote-results { margin:14px 0 0; padding:0; list-style:none; }
+    .vote-results li { display:flex; justify-content:space-between; gap:12px; padding:6px 0; border-bottom:1px dashed color-mix(in srgb,var(--color-text) 16%,var(--color-background)); }
+    .vote-results li:last-child { border-bottom:0; }
+    .vote-count { color:var(--color-primary); font-weight:700; }
+    .vote-status { min-height:1.7em; margin:6px 0 0; color:var(--color-primary); }
     .snack-list { margin:12px 0 4px; border:1px solid color-mix(in srgb,var(--color-text) 16%,var(--color-background)); border-radius:12px; background:var(--color-background); }
     .snack-list summary { padding:10px 12px; color:var(--color-primary); font-weight:700; cursor:pointer; }
     .snack-list[open] summary { border-bottom:1px dashed color-mix(in srgb,var(--color-text) 16%,var(--color-background)); }
@@ -141,6 +153,23 @@
       <p class="budget-total">全程交通：先抓約 ¥9,400～13,800／人</p>
       <p>市區以地鐵／JR／私鐵為主；台場搭百合海鷗線，晴空塔搭東武線。Tokyo Subway Ticket 24／48／72 小時票約 ¥1,000／1,500／2,000，只有每天多次搭乘且路線集中在 Metro／都營地鐵時才比較划算。</p>
       <p>提醒：餐廳營業時間、休店日與預約規則，出發前再確認一次。</p>
+    </section>
+    <section class="dinner-vote" aria-label="晚餐投票">
+      <h2>晚餐投票</h2>
+      <p>填寫暱稱，選一個想吃的晚餐。</p>
+      <form id="dinner-vote-form">
+        <label for="vote-nickname">暱稱</label>
+        <input id="vote-nickname" name="nickname" maxlength="40" required autocomplete="nickname">
+        <label for="vote-option">晚餐選項</label>
+        <select id="vote-option" name="option" required>
+          <option value="銀平 KITTE 丸之內店">銀平 KITTE 丸之內店</option>
+          <option value="淺草むぎとろ 本店">淺草むぎとろ 本店</option>
+          <option value="すしざんまい 本店">すしざんまい 本店</option>
+        </select>
+        <button type="submit">送出投票</button>
+      </form>
+      <p id="vote-status" class="vote-status" role="status" aria-live="polite"></p>
+      <ul id="vote-results" class="vote-results" aria-label="晚餐票數"></ul>
     </section>
 
     <section class="days" aria-label="八天行程">
@@ -262,6 +291,38 @@
       'https://hffpxtjnspvaoxqxchhd.supabase.co',
       'sb_publishable_43JHIjfKRo34bxCumOKbyQ_ElvkccLS'
     );
+    const voteOptions = [...document.querySelectorAll('#vote-option option')].map((option) => option.value);
+    const voteResults = document.querySelector('#vote-results');
+    const voteStatus = document.querySelector('#vote-status');
+    const renderVotes = (votes) => {
+      const counts = Object.fromEntries(voteOptions.map((option) => [option, 0]));
+      votes.forEach(({ option }) => { if (option in counts) counts[option] += 1; });
+      voteResults.replaceChildren(...voteOptions.map((option) => {
+        const item = document.createElement('li');
+        item.innerHTML = `<span>${option}</span><span class="vote-count">${counts[option]} 票</span>`;
+        return item;
+      }));
+    };
+    const loadVotes = async () => {
+      const { data, error } = await supabase.from('dinner_votes').select('option');
+      if (error) { voteStatus.textContent = '票數載入失敗，請稍後再試。'; return; }
+      renderVotes(data);
+    };
+    loadVotes();
+    supabase.channel('dinner-votes').on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'dinner_votes' }, loadVotes).subscribe();
+    document.querySelector('#dinner-vote-form').addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const form = event.currentTarget;
+      const button = form.querySelector('button');
+      button.disabled = true;
+      voteStatus.textContent = '送出中⋯';
+      const { error } = await supabase.from('dinner_votes').insert({ nickname: form.nickname.value.trim(), option: form.option.value });
+      button.disabled = false;
+      if (error) { voteStatus.textContent = '投票失敗，請確認暱稱後再試。'; return; }
+      form.reset();
+      voteStatus.textContent = '投票完成！';
+      loadVotes();
+    });
     const checksByStop = new Map();
     const updateCheckbox = (stopId, checked) => {
       const checkbox = checksByStop.get(stopId);
