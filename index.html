@@ -311,6 +311,11 @@
     const applyTodayFilter = () => {
       const onlyToday = todayToggle.getAttribute('aria-pressed') === 'true';
       daySections.forEach((day, index) => { day.hidden = onlyToday && String(index + 1) !== todayDay.value; });
+      let currentDay = 0;
+      document.querySelectorAll('.days > .day, .days > .snack-list').forEach((section) => {
+        if (section.classList.contains('day')) currentDay += 1;
+        if (section.classList.contains('snack-list')) section.hidden = onlyToday && String(currentDay) !== todayDay.value;
+      });
       const visibleDay = daySections.find((day, index) => String(index + 1) === todayDay.value);
       const done = visibleDay ? visibleDay.querySelectorAll('.stop-check:checked').length : 0;
       const total = visibleDay ? visibleDay.querySelectorAll('.stop-check').length : 0;
