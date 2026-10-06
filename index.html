@@ -9,65 +9,78 @@
   <meta property="og:url" content="https://as4869dk2-cloud.github.io/tainan-trip/">
   <title>日本八天七夜遊程｜行程表</title>
   <style>
-    :root { color-scheme: light; --ink:#20252b; --muted:#68717c; --paper:#fffdf9; --line:#e9e1d7; --accent:#b84b42; --accent-soft:#f7e8e2; }
+    :root { color-scheme:light; --color-primary:#A8493E; --color-background:#FFF8E9; --color-text:#29333D; }
     * { box-sizing:border-box; }
-    body { margin:0; background:#f3efe9; color:var(--ink); font-family:"Bradley Hand","Comic Sans MS","BiauKai","DFKai-SB","Noto Sans TC",cursive; line-height:1.65; }
+    body { margin:0; background:var(--color-background); color:var(--color-text); font-family:"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif; font-size:17px; line-height:1.7; }
     main { width:min(100% - 28px, 680px); margin:0 auto; padding:22px 0 42px; }
-    header { padding:28px 22px 24px; background:var(--accent); color:#fff; border-radius:22px; box-shadow:0 8px 24px #8f443329; transform:rotate(-.5deg); }
-    header p { margin:0 0 6px; font-size:.86rem; opacity:.85; letter-spacing:.12em; }
+    header { min-height:300px; display:flex; flex-direction:column; justify-content:center; align-items:flex-start; padding:clamp(24px, 6vw, 44px); background:linear-gradient(90deg, var(--color-background) 0%, color-mix(in srgb,var(--color-background) 92%,transparent) 34%, color-mix(in srgb,var(--color-background) 50%,transparent) 54%, transparent 76%), url("images/cover.webp") center / cover; color:var(--color-text); border:1px solid color-mix(in srgb,var(--color-text) 16%,var(--color-background)); border-radius:22px; box-shadow:0 8px 24px color-mix(in srgb,var(--color-text) 14%,transparent); }
+    header > * { max-width:52%; }
+    header p { margin:0 0 6px; color:var(--color-text); font-size:17px; letter-spacing:.04em; }
+    h1, h2, h3 { font-family:"Iowan Old Style","Baskerville","Noto Serif TC","Songti TC",serif; }
     h1 { margin:0; font-size:clamp(2rem, 9vw, 3.2rem); line-height:1.15; letter-spacing:.04em; }
-    .intro { margin:12px 0 0; font-size:.95rem; opacity:.92; }
-    .overview { margin-top:20px; background:#fffaf0; border:1px solid var(--line); border-radius:18px 14px 20px 12px; padding:18px 18px 14px; box-shadow:0 4px 14px #4b3b2a0b; transform:rotate(.35deg); }
-    .overview h2 { margin:0 0 8px; color:var(--accent); font-size:1.3rem; }
-    .overview p { margin:5px 0; font-size:.96rem; }
-    .overview strong { color:var(--accent); }
-    .budget { margin-top:20px; background:#fffaf0; border:1px solid var(--line); border-radius:14px 20px 12px 18px; padding:18px; box-shadow:0 4px 14px #4b3b2a0b; }
+    .intro { margin:12px 0 0; font-size:17px; opacity:1; }
+    .today-controls { display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin-top:20px; padding:14px 16px; background:var(--color-background); border:1px solid color-mix(in srgb,var(--color-text) 16%,var(--color-background)); border-radius:16px; }
+    .today-controls label { font-weight:700; }
+    .today-controls select, .today-controls button { min-height:40px; padding:7px 12px; border:1px solid var(--color-primary); border-radius:10px; background:var(--color-background); color:var(--color-text); font:inherit; font-size:17px; }
+    .today-controls button { cursor:pointer; }
+    .today-controls button[aria-pressed="true"] { background:var(--color-primary); color:var(--color-background); }
+    .overview { margin-top:20px; background:var(--color-background); border:1px solid color-mix(in srgb,var(--color-text) 16%,var(--color-background)); border-radius:18px 14px 20px 12px; padding:18px 18px 14px; box-shadow:0 4px 14px color-mix(in srgb,var(--color-text) 8%,transparent); transform:rotate(.35deg); }
+    .overview h2 { margin:0 0 8px; color:var(--color-primary); font-size:1.3rem; }
+    .overview p { margin:5px 0; font-size:17px; }
+    .overview strong { color:var(--color-primary); }
+    .budget { margin-top:20px; background:var(--color-background); border:1px solid color-mix(in srgb,var(--color-text) 16%,var(--color-background)); border-radius:14px 20px 12px 18px; padding:18px; box-shadow:0 4px 14px color-mix(in srgb,var(--color-text) 8%,transparent); }
     .budget h2 { margin:0 0 10px; font-size:1.3rem; }
-    .budget h3 { margin:14px 0 4px; color:var(--accent); font-size:1rem; letter-spacing:.03em; }
-    .budget p { margin:4px 0; font-size:.9rem; }
-    .budget-row { display:flex; justify-content:space-between; align-items:baseline; gap:12px; border-bottom:1px dashed var(--line); padding:8px 0; }
-    .budget-row span:last-child { color:var(--accent); font-weight:700; white-space:nowrap; }
-    .budget-total { margin-top:10px !important; color:var(--accent); font-weight:700; }
-    .snack-list { margin:12px 0 4px; border:1px solid var(--line); border-radius:12px; background:#fffaf0; }
-    .snack-list summary { padding:10px 12px; color:var(--accent); font-weight:700; cursor:pointer; }
-    .snack-list[open] summary { border-bottom:1px dashed var(--line); }
-    .snack { display:grid; grid-template-columns:1fr auto; gap:4px 10px; padding:10px 12px; border-bottom:1px dashed var(--line); }
+    .budget h3 { margin:14px 0 4px; color:var(--color-primary); font-size:17px; letter-spacing:.03em; }
+    .budget p { margin:4px 0; font-size:17px; }
+    .budget-row { display:flex; justify-content:space-between; align-items:baseline; gap:12px; border-bottom:1px dashed color-mix(in srgb,var(--color-text) 16%,var(--color-background)); padding:8px 0; }
+    .budget-row span:last-child { color:var(--color-primary); font-weight:700; white-space:nowrap; }
+    .budget-total { margin-top:10px !important; color:var(--color-primary); font-weight:700; }
+    .snack-list { margin:12px 0 4px; border:1px solid color-mix(in srgb,var(--color-text) 16%,var(--color-background)); border-radius:12px; background:var(--color-background); }
+    .snack-list summary { padding:10px 12px; color:var(--color-primary); font-weight:700; cursor:pointer; }
+    .snack-list[open] summary { border-bottom:1px dashed color-mix(in srgb,var(--color-text) 16%,var(--color-background)); }
+    .snack { display:grid; grid-template-columns:1fr auto; gap:4px 10px; padding:10px 12px; border-bottom:1px dashed color-mix(in srgb,var(--color-text) 16%,var(--color-background)); }
     .snack:last-child { border-bottom:0; }
     .snack img { grid-column:1 / -1; width:100%; height:120px; object-fit:cover; border-radius:10px; display:block; }
-    .snack strong { font-size:.95rem; }
-    .snack small { grid-column:1 / -1; color:var(--muted); font-size:.82rem; }
-    .snack-map { align-self:center; border:1px solid var(--accent); border-radius:999px; padding:4px 8px; background:transparent; color:var(--accent); font:inherit; font-size:.75rem; cursor:pointer; }
-    .days { display:grid; gap:16px; margin-top:20px; }
-    .day { background:var(--paper); border:1px solid var(--line); border-radius:18px; padding:20px 16px 8px; box-shadow:0 4px 14px #4b3b2a0b; }
-    .day-head { display:flex; align-items:baseline; justify-content:space-between; gap:12px; border-bottom:1px solid var(--line); padding:0 4px 10px; }
-    h2 { margin:0; color:var(--accent); font-size:1.35rem; }
-    .date { color:var(--muted); font-size:.86rem; white-space:nowrap; }
-    .stop { display:grid; grid-template-columns:76px 1fr; gap:12px; padding:14px 4px; border-bottom:1px dashed var(--line); }
-    .stop:last-child { border-bottom:0; }
-    .stop > div { position:relative; min-width:0; padding:0 0 2px 20px; border-left:2px solid #e8b8ae; }
-    .stop > div::before { content:""; position:absolute; top:5px; left:-7px; width:10px; height:10px; border:2px solid var(--paper); border-radius:50%; background:var(--accent); box-shadow:0 0 0 1px var(--accent); animation:timeline-dot 3.2s ease-in-out infinite alternate; }
+    .snack strong { font-size:17px; }
+    .snack small { grid-column:1 / -1; color:var(--color-text); font-size:17px; }
+    .snack-map { align-self:center; border:1px solid var(--color-primary); border-radius:999px; padding:4px 8px; background:transparent; color:var(--color-primary); font:inherit; font-size:17px; cursor:pointer; }
+    .days { display:grid; gap:24px; margin-top:20px; }
+    .day { background:transparent; border:0; border-radius:0; padding:0; box-shadow:none; }
+    .day-head { display:flex; align-items:baseline; justify-content:space-between; gap:12px; border-bottom:2px solid var(--color-primary); padding:0 4px 10px; margin-bottom:12px; }
+    h2 { margin:0; color:var(--color-primary); font-size:1.35rem; }
+    .date { color:var(--color-text); font-size:17px; white-space:nowrap; }
+    .stop { display:grid; grid-template-columns:76px 1fr; gap:12px; margin-bottom:12px; padding:16px; background:color-mix(in srgb,var(--color-background) 88%,var(--color-primary)); border:1px solid color-mix(in srgb,var(--color-primary) 12%,var(--color-background)); border-radius:16px; box-shadow:0 3px 10px color-mix(in srgb,var(--color-text) 9%,transparent); }
+    body.reveal-ready .stop { opacity:0; transform:translateY(12px); }
+    body.reveal-ready .stop.is-visible { animation:stop-rise .4s ease-out both; animation-delay:var(--reveal-delay, 0s); }
+    @keyframes stop-rise { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+    @media (prefers-reduced-motion: reduce) { body.reveal-ready .stop { opacity:1; transform:none; } body.reveal-ready .stop.is-visible { animation:none; } }
+    .stop:last-child { margin-bottom:0; }
+    .stop > div { position:relative; min-width:0; padding:0 0 2px 20px; border-left:2px solid color-mix(in srgb,var(--color-primary) 38%,var(--color-background)); }
+    .stop > div::before { content:""; position:absolute; top:5px; left:-7px; width:10px; height:10px; border:2px solid var(--color-background); border-radius:50%; background:var(--color-primary); box-shadow:0 0 0 1px var(--color-primary); animation:timeline-dot 3.2s ease-in-out infinite alternate; }
     @keyframes timeline-dot { from { top:5px; } to { top:calc(100% - 16px); } }
     @media (prefers-reduced-motion: reduce) { .stop > div::before { animation:none; } }
-    time { align-self:start; color:var(--accent); font-weight:700; font-size:.82rem; line-height:1.2; padding:5px 6px; text-align:center; background:var(--accent-soft); border-radius:8px; }
+    time { align-self:start; color:var(--color-primary); font-weight:700; font-size:17px; line-height:1.2; padding:5px 6px; text-align:center; background:color-mix(in srgb,var(--color-primary) 13%,var(--color-background)); border-radius:8px; }
     .place { margin:0; font-size:1.08rem; line-height:1.35; font-weight:700; }
-    .note { margin:4px 0 0; color:var(--muted); font-size:.9rem; }
-    .stop .note:last-child { margin-top:8px; padding:5px 8px; color:var(--accent); background:#fff8f3; border-left:3px solid #e8b8ae; border-radius:0 8px 8px 0; font-size:.82rem; }
-    .guide-button { margin-top:8px; border:1px solid var(--accent); border-radius:999px; padding:5px 10px; background:var(--accent-soft); color:var(--accent); font:inherit; font-size:.82rem; cursor:pointer; }
+    .place-icon { display:inline-block; width:1.35em; margin-right:.18em; font-size:1em; line-height:1; text-align:center; vertical-align:-.04em; }
+    .stop-check { width:1em; height:1em; margin:0 .45em 0 0; accent-color:var(--color-primary); vertical-align:-.08em; }
+    .note { margin:4px 0 0; color:var(--color-text); font-size:17px; }
+    .stop .note:last-child { margin-top:8px; padding:5px 8px; color:var(--color-primary); background:var(--color-background); border-left:3px solid color-mix(in srgb,var(--color-primary) 38%,var(--color-background)); border-radius:0 8px 8px 0; font-size:17px; }
+    .guide-button { margin-top:8px; border:1px solid var(--color-primary); border-radius:999px; padding:5px 10px; background:color-mix(in srgb,var(--color-primary) 13%,var(--color-background)); color:var(--color-primary); font:inherit; font-size:17px; cursor:pointer; }
     .guide-button:active { transform:scale(.97); }
-    dialog { width:min(calc(100% - 28px), 520px); border:1px solid var(--line); border-radius:20px; padding:0; color:var(--ink); background:var(--paper); box-shadow:0 18px 60px #24170d40; }
-    dialog::backdrop { background:#24170d66; }
+    dialog { width:min(calc(100% - 28px), 520px); border:1px solid color-mix(in srgb,var(--color-text) 16%,var(--color-background)); border-radius:20px; padding:0; color:var(--color-text); background:var(--color-background); box-shadow:0 18px 60px color-mix(in srgb,var(--color-text) 24%,transparent); }
+    dialog::backdrop { background:color-mix(in srgb,var(--color-text) 55%,transparent); }
     .guide { padding:22px; }
     .guide h2 { margin:0 28px 4px 0; }
-    .guide p { margin:4px 0; color:var(--muted); font-size:.92rem; }
-    .guide-close { float:right; border:0; background:transparent; color:var(--muted); font-size:1.4rem; cursor:pointer; }
-    .route-map { display:block; width:100%; height:280px; margin:16px 0 10px; border:1px dashed var(--line); border-radius:14px; background:#fffaf0; }
-    .map-fallback { color:var(--muted); font-size:.85rem; }
-    .share-qr { margin-top:20px; padding:16px; text-align:center; background:#fffaf0; border:1px solid var(--line); border-radius:16px; }
-    .share-qr p { margin:0 0 10px; color:var(--accent); font-weight:700; }
+    .guide p { margin:4px 0; color:var(--color-text); font-size:17px; }
+    .guide-close { float:right; border:0; background:transparent; color:var(--color-text); font-size:1.4rem; cursor:pointer; }
+    .route-map { display:block; width:100%; height:280px; margin:16px 0 10px; border:1px dashed color-mix(in srgb,var(--color-text) 16%,var(--color-background)); border-radius:14px; background:var(--color-background); }
+    .map-fallback { color:var(--color-text); font-size:17px; }
+    .share-qr { margin-top:20px; padding:16px; text-align:center; background:var(--color-background); border:1px solid color-mix(in srgb,var(--color-text) 16%,var(--color-background)); border-radius:16px; }
+    .share-qr p { margin:0 0 10px; color:var(--color-primary); font-weight:700; }
     .share-qr img { display:block; width:min(180px, 60vw); height:auto; margin:0 auto; border-radius:8px; }
-    footer { color:var(--muted); font-size:.82rem; text-align:center; margin-top:22px; }
-    @media (max-width:420px) { .stop { grid-template-columns:62px 1fr; gap:9px; padding-left:0; padding-right:0; } .stop > div { padding-left:16px; } .place { font-size:1rem; } .note { font-size:.86rem; } .budget-row { gap:8px; } .budget-row span:last-child { font-size:.84rem; } }
-    @media (min-width:560px) { main { padding-top:36px; } header { padding:34px 32px 30px; } .day { padding-left:22px; padding-right:22px; } }
+    footer { color:var(--color-text); font-size:17px; text-align:center; margin-top:22px; }
+    @media (max-width:420px) { main { width:calc(100% - 24px); } header { min-height:260px; background-position:58% center; } header > * { max-width:68%; } .stop { grid-template-columns:62px 1fr; gap:9px; padding:16px; } .stop > div { padding-left:16px; } .place { font-size:17px; } .budget-row { gap:8px; } }
+    @media (min-width:560px) { main { padding-top:36px; } header { padding:34px 32px 30px; } .day { padding:0; } }
   </style>
 </head>
 <body>
@@ -77,6 +90,15 @@
       <h1>日本八天七夜遊程</h1>
       <p class="intro">示意行程｜店名與時間之後可再替換成實際安排</p>
     </header>
+
+    <section class="today-controls" aria-label="今日行程設定">
+      <label for="today-day">今天是</label>
+      <select id="today-day">
+        <option value="1">Day 1</option><option value="2">Day 2</option><option value="3">Day 3</option><option value="4">Day 4</option>
+        <option value="5">Day 5</option><option value="6">Day 6</option><option value="7">Day 7</option><option value="8">Day 8</option>
+      </select>
+      <button id="today-toggle" type="button" aria-pressed="false">只看今天</button>
+    </section>
 
     <section class="overview" aria-label="行程概述">
       <h2>先看這張小抄｜行程概述</h2>
@@ -214,6 +236,61 @@
     </div>
   </dialog>
   <script>
+    document.body.classList.add('reveal-ready');
+    const daySections = [...document.querySelectorAll('.days .day')];
+    const stops = [...document.querySelectorAll('.days .stop')];
+    const todayDay = document.querySelector('#today-day');
+    const todayToggle = document.querySelector('#today-toggle');
+    const savedDay = localStorage.getItem('tokyo-trip-day') || '1';
+    const savedTodayOnly = localStorage.getItem('tokyo-trip-today-only') === 'true';
+    todayDay.value = savedDay;
+    const applyTodayFilter = () => {
+      const onlyToday = todayToggle.getAttribute('aria-pressed') === 'true';
+      daySections.forEach((day, index) => { day.hidden = onlyToday && String(index + 1) !== todayDay.value; });
+    };
+    todayToggle.setAttribute('aria-pressed', String(savedTodayOnly));
+    todayDay.addEventListener('change', () => { localStorage.setItem('tokyo-trip-day', todayDay.value); applyTodayFilter(); });
+    todayToggle.addEventListener('click', () => {
+      const next = todayToggle.getAttribute('aria-pressed') !== 'true';
+      todayToggle.setAttribute('aria-pressed', String(next));
+      localStorage.setItem('tokyo-trip-today-only', String(next));
+      applyTodayFilter();
+    });
+    applyTodayFilter();
+    stops.forEach((stop, index) => {
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.className = 'stop-check';
+      checkbox.setAttribute('aria-label', `完成${stop.querySelector('.place')?.textContent.trim() || `第 ${index + 1} 站`}`);
+      checkbox.checked = localStorage.getItem(`tokyo-trip-stop-${index}`) === 'true';
+      checkbox.addEventListener('change', () => localStorage.setItem(`tokyo-trip-stop-${index}`, String(checkbox.checked)));
+      stop.querySelector('.place')?.prepend(checkbox);
+    });
+    let revealSequence = 0;
+    const revealObserver = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? null : new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.style.setProperty('--reveal-delay', `${Math.min(revealSequence++, 3) * .08}s`);
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: .12 });
+    stops.forEach((stop, index) => {
+      if (revealObserver) revealObserver.observe(stop);
+      else stop.classList.add('is-visible');
+    });
+    const foodPlaces = ['銀平','むぎとろ','すしざんまい','麵屋','まい泉','築地場外市場','鳥ぎん','ホープ軒','たつや','権八','飯店周邊早餐'];
+    const dessertPlaces = ['伴手禮','PARIS','バターステイツ','甜點','Aqua City'];
+    const transportPlaces = ['→','前往成田機場'];
+    document.querySelectorAll('.place').forEach((place) => {
+      const name = place.textContent.trim();
+      const icon = transportPlaces.some((word) => name.includes(word)) ? '🚶' : dessertPlaces.some((word) => name.includes(word)) ? '🍧' : foodPlaces.some((word) => name.includes(word)) ? '🍜' : '📍';
+      const marker = document.createElement('span');
+      marker.className = 'place-icon';
+      marker.setAttribute('aria-hidden', 'true');
+      marker.textContent = icon;
+      place.prepend(marker);
+    });
     const dialog = document.querySelector('#guide-dialog');
     const title = document.querySelector('#guide-title');
     const transport = document.querySelector('#guide-transport');
