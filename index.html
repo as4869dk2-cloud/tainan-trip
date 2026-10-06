@@ -62,6 +62,12 @@
     .snack strong { font-size:17px; }
     .snack small { grid-column:1 / -1; color:var(--color-text); font-size:17px; }
     .snack-map { align-self:center; border:1px solid var(--color-primary); border-radius:999px; padding:4px 8px; background:transparent; color:var(--color-primary); font:inherit; font-size:17px; cursor:pointer; }
+    .menu-list { margin-top:10px; border-top:1px dashed color-mix(in srgb,var(--color-text) 16%,var(--color-background)); }
+    .menu-list summary { padding:7px 0 2px; color:var(--color-primary); font-weight:700; cursor:pointer; }
+    .menu-list ul { margin:4px 0 6px; padding-left:20px; }
+    .menu-list li { padding:2px 0; }
+    .menu-list a { color:var(--color-primary); }
+    .menu-date { margin:4px 0 0; color:var(--color-text); font-size:15px; }
     .days { display:grid; gap:24px; margin-top:20px; }
     .day { background:transparent; border:0; border-radius:0; padding:0; box-shadow:none; }
     .day-head { display:flex; align-items:baseline; justify-content:space-between; gap:12px; border-bottom:2px solid var(--color-primary); padding:0 4px 10px; margin-bottom:12px; }
@@ -449,6 +455,41 @@
       day.querySelector('.day-head').append(toggle);
     });
     document.querySelectorAll('img').forEach((image) => { image.loading = 'lazy'; });
+    const menuData = {
+      '銀平 KITTE 丸之內店': { items:['鯛めし ¥1,650','お造り盛り合わせ ¥2,750','鯛ぞうすい ¥1,320'], source:'https://ginpei-marunouchi.com/menu/' },
+      '淺草むぎとろ 本店': { items:['むぎとろ ¥2,530','刺身とむぎとろ ¥3,850','牛タンとむぎとろ ¥4,400'], source:'https://www.mugitoro.co.jp/honten/kaiseki/' },
+      'すしざんまい 東京スカイツリータウン・ソラマチ店': { items:['特選すしざんまい','本まぐろのユッケ','あさりのお味噌汁'], source:'https://www.kiyomura.co.jp/menu?menu_type=1&store_id=71' },
+      '上野 すしざんまい 上野店': { items:['特選すしざんまい','まぐろ・本まぐろの握り','ランチセット（茶碗蒸し・お椀付き）'], source:'https://www.kiyomura.co.jp/menu/lunch?menu_type=4&store_id=20' },
+      '麵屋武藏 武仁': { items:['武仁肉つけ麺','武仁肉ら〜麺','味玉つけ麺（價格依店內現場）'], source:'https://menya634.co.jp/' },
+      'まい泉 青山本店': { items:['まい泉定食','ヒレかつ定食','青山本店會席料理（季節菜單）'], source:'https://mai-sen.com/restaurant/aoyama/' },
+      'すしざんまい 本店': { items:['特選すしざんまい','極上まぐろざんまい','極上本鮪三貫にぎり'], source:'https://www.kiyomura.co.jp/menu?menu_id=340&store_id=35' },
+      '鳥ぎん 銀座本店': { items:['釜めし','焼き鳥','鳥スープ'], source:'https://torigin-ginza.jp/menu/' },
+      'ホープ軒本舗 吉祥寺店': { items:['中華そば','チャーシュー麺','旨とろあぶら（期間限定）'], source:'https://hopeken-honpo.jp/' },
+      'たつや 駅前店': { items:['炭火焼き鳥','串焼き','居酒屋一品料理（價格依店內現場）'], source:'https://tabelog.com/tokyo/A1303/A130302/13001617/' },
+      '権八 お台場': { items:['手打ち蕎麦','串焼き','天婦羅'], source:'https://gonpachi.jp/odaiba/' },
+      '築地場外市場': { items:['海鮮丼','玉子焼','壽司與海鮮小吃'], note:'市場店家各自有菜單，價格依店家與當日食材而定。', source:'https://www.tsukiji.or.jp/enjoy/' },
+      '飯店周邊早餐': { items:['飯店早餐','咖啡與吐司','便利商店早餐組合'], note:'依住宿地點與當日營業狀況自選。', source:'https://www.gotokyo.org/tc/' }
+    };
+    document.querySelectorAll('.place').forEach((place) => {
+      const menu = menuData[place.textContent.trim()];
+      if (!menu) return;
+      const details = document.createElement('details');
+      details.className = 'menu-list';
+      const summary = document.createElement('summary');
+      summary.textContent = '看菜單';
+      details.append(summary);
+      const list = document.createElement('ul');
+      menu.items.forEach((item) => { const li = document.createElement('li'); li.textContent = item; list.append(li); });
+      details.append(list);
+      if (menu.note) { const note = document.createElement('p'); note.className = 'menu-date'; note.textContent = menu.note; details.append(note); }
+      const source = document.createElement('p');
+      source.className = 'menu-date';
+      source.textContent = '查詢：2026-10-06｜';
+      const link = document.createElement('a');
+      link.href = menu.source; link.target = '_blank'; link.rel = 'noopener noreferrer'; link.textContent = '查看來源';
+      source.append(link); details.append(source);
+      place.closest('.stop')?.querySelector(':scope > div')?.append(details);
+    });
     const foodPlaces = ['銀平','むぎとろ','すしざんまい','麵屋','まい泉','築地場外市場','鳥ぎん','ホープ軒','たつや','権八','飯店周邊早餐'];
     const dessertPlaces = ['伴手禮','PARIS','バターステイツ','甜點','Aqua City'];
     const transportPlaces = ['→','前往成田機場'];
