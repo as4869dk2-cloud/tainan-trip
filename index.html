@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>日本八天七夜遊程｜行程表</title>
+  <style>
+    :root { color-scheme: light; --ink:#20252b; --muted:#68717c; --paper:#fffdf9; --line:#e9e1d7; --accent:#b84b42; --accent-soft:#f7e8e2; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:#f3efe9; color:var(--ink); font-family:"Bradley Hand","Comic Sans MS","BiauKai","DFKai-SB","Noto Sans TC",cursive; line-height:1.65; }
+    main { width:min(100% - 28px, 680px); margin:0 auto; padding:22px 0 42px; }
+    header { padding:28px 22px 24px; background:var(--accent); color:#fff; border-radius:22px; box-shadow:0 8px 24px #8f443329; transform:rotate(-.5deg); }
+    header p { margin:0 0 6px; font-size:.86rem; opacity:.85; letter-spacing:.12em; }
+    h1 { margin:0; font-size:clamp(2rem, 9vw, 3.2rem); line-height:1.15; letter-spacing:.04em; }
+    .intro { margin:12px 0 0; font-size:.95rem; opacity:.92; }
+    .overview { margin-top:20px; background:#fffaf0; border:1px solid var(--line); border-radius:18px 14px 20px 12px; padding:18px 18px 14px; box-shadow:0 4px 14px #4b3b2a0b; transform:rotate(.35deg); }
+    .overview h2 { margin:0 0 8px; color:var(--accent); font-size:1.3rem; }
+    .overview p { margin:5px 0; font-size:.96rem; }
+    .overview strong { color:var(--accent); }
+    .budget { margin-top:20px; background:#fffaf0; border:1px solid var(--line); border-radius:14px 20px 12px 18px; padding:18px; box-shadow:0 4px 14px #4b3b2a0b; }
+    .budget h2 { margin:0 0 10px; font-size:1.3rem; }
+    .budget h3 { margin:14px 0 4px; color:var(--accent); font-size:1rem; }
+    .budget p { margin:4px 0; font-size:.9rem; }
+    .budget-row { display:flex; justify-content:space-between; gap:12px; border-bottom:1px dashed var(--line); padding:5px 0; }
+    .budget-row span:last-child { color:var(--accent); font-weight:700; white-space:nowrap; }
+    .budget-total { margin-top:10px !important; color:var(--accent); font-weight:700; }
+    .days { display:grid; gap:16px; margin-top:20px; }
+    .day { background:var(--paper); border:1px solid var(--line); border-radius:18px; padding:20px 16px 8px; box-shadow:0 4px 14px #4b3b2a0b; }
+    .day-head { display:flex; align-items:baseline; justify-content:space-between; gap:12px; border-bottom:1px solid var(--line); padding:0 4px 10px; }
+    h2 { margin:0; color:var(--accent); font-size:1.35rem; }
+    .date { color:var(--muted); font-size:.86rem; white-space:nowrap; }
+    .stop { display:grid; grid-template-columns:76px 1fr; gap:12px; padding:14px 4px; border-bottom:1px dashed var(--line); }
+    .stop:last-child { border-bottom:0; }
+    .stop > div { position:relative; min-width:0; padding:0 0 2px 20px; border-left:2px solid #e8b8ae; }
+    .stop > div::before { content:""; position:absolute; top:5px; left:-7px; width:10px; height:10px; border:2px solid var(--paper); border-radius:50%; background:var(--accent); box-shadow:0 0 0 1px var(--accent); }
+    time { color:var(--accent); font-weight:700; font-size:.9rem; padding-top:2px; text-align:right; }
+    .place { margin:0; font-size:1.05rem; font-weight:700; }
+    .note { margin:2px 0 0; color:var(--muted); font-size:.9rem; }
+    .guide-button { margin-top:8px; border:1px solid var(--accent); border-radius:999px; padding:5px 10px; background:var(--accent-soft); color:var(--accent); font:inherit; font-size:.82rem; cursor:pointer; }
+    .guide-button:active { transform:scale(.97); }
+    dialog { width:min(calc(100% - 28px), 520px); border:1px solid var(--line); border-radius:20px; padding:0; color:var(--ink); background:var(--paper); box-shadow:0 18px 60px #24170d40; }
+    dialog::backdrop { background:#24170d66; }
+    .guide { padding:22px; }
+    .guide h2 { margin:0 28px 4px 0; }
+    .guide p { margin:4px 0; color:var(--muted); font-size:.92rem; }
+    .guide-close { float:right; border:0; background:transparent; color:var(--muted); font-size:1.4rem; cursor:pointer; }
+    .route-map { display:block; width:100%; height:280px; margin:16px 0 10px; border:1px dashed var(--line); border-radius:14px; background:#fffaf0; }
+    .map-fallback { color:var(--muted); font-size:.85rem; }
+    footer { color:var(--muted); font-size:.82rem; text-align:center; margin-top:22px; }
+    @media (min-width:560px) { main { padding-top:36px; } header { padding:34px 32px 30px; } .day { padding-left:22px; padding-right:22px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <p>TRAVEL PLAN · 8 DAYS / 7 NIGHTS</p>
+      <h1>日本八天七夜遊程</h1>
+      <p class="intro">示意行程｜店名與時間之後可再替換成實際安排</p>
+    </header>
+
+    <section class="overview" aria-label="行程概述">
+      <h2>先看這張小抄｜行程概述</h2>
+      <p><strong>Day 1</strong> 抵達東京・東京車站・銀座</p>
+      <p><strong>Day 2</strong> 淺草寺・晴空塔・下町散步</p>
+      <p><strong>Day 3</strong> 上野公園・阿美橫町・秋葉原</p>
+      <p><strong>Day 4</strong> 明治神宮・原宿・澀谷</p>
+      <p><strong>Day 5</strong> 築地市場・濱離宮・銀座</p>
+      <p><strong>Day 6</strong> 吉祥寺・井之頭公園・中目黑</p>
+      <p><strong>Day 7</strong> 台場・teamLab・東京灣夜景</p>
+      <p><strong>Day 8</strong> 最後採買・前往機場</p>
+    </section>
+
+    <section class="budget" aria-label="費用小抄">
+      <h2>費用小抄｜先抓這個預算</h2>
+      <p>以下為成人每人日圓估算；實際價格依日期、套餐與現場消費為準。</p>
+      <h3>景點門票</h3>
+      <div class="budget-row"><span>東京晴空塔</span><span>¥1,800～3,000</span></div>
+      <div class="budget-row"><span>SHIBUYA SKY</span><span>¥2,700～3,400</span></div>
+      <div class="budget-row"><span>濱離宮恩賜庭園</span><span>約 ¥300</span></div>
+      <div class="budget-row"><span>teamLab Borderless</span><span>約 ¥3,600 起</span></div>
+      <p>淺草寺、明治神宮、上野公園、原宿、銀座、台場海濱公園等主要區域可免費參觀。</p>
+      <h3>11 餐餐費</h3>
+      <div class="budget-row"><span>銀平／淺草むぎとろ</span><span>¥2,500～6,000</span></div>
+      <div class="budget-row"><span>すしざんまい（午餐／晚餐）</span><span>¥2,000～5,000</span></div>
+      <div class="budget-row"><span>麵屋武藏／まい泉／ホープ軒</span><span>¥1,000～3,000</span></div>
+      <div class="budget-row"><span>鳥ぎん／たつや／権八</span><span>¥2,500～6,000</span></div>
+      <p class="budget-total">11 餐合計：先抓約 ¥26,500～50,000／人</p>
+      <h3>交通費｜IC 卡逐段支付</h3>
+      <p>建議使用 Suica／PASMO；東京 Metro 的 IC 卡依距離以 1 日圓單位計費，市區移動以電車、地鐵與 JR 為主，公車只作備用接駁。</p>
+      <div class="budget-row"><span>Day 1｜成田 → 東京</span><span>約 ¥3,000～4,000</span></div>
+      <div class="budget-row"><span>Day 2｜淺草・晴空塔</span><span>約 ¥600～1,000</span></div>
+      <div class="budget-row"><span>Day 3｜上野・秋葉原</span><span>約 ¥400～800</span></div>
+      <div class="budget-row"><span>Day 4｜原宿・表參道・澀谷</span><span>約 ¥500～800</span></div>
+      <div class="budget-row"><span>Day 5｜築地・汐留・銀座</span><span>約 ¥600～1,000</span></div>
+      <div class="budget-row"><span>Day 6｜吉祥寺・中目黑・惠比壽</span><span>約 ¥700～1,200</span></div>
+      <div class="budget-row"><span>Day 7｜台場</span><span>約 ¥600～1,000</span></div>
+      <div class="budget-row"><span>Day 8｜東京 → 成田</span><span>約 ¥3,000～4,000</span></div>
+      <p class="budget-total">全程交通：先抓約 ¥9,400～13,800／人</p>
+      <p>市區以地鐵／JR／私鐵為主；台場搭百合海鷗線，晴空塔搭東武線。Tokyo Subway Ticket 24／48／72 小時票約 ¥1,000／1,500／2,000，只有每天多次搭乘且路線集中在 Metro／都營地鐵時才比較划算。</p>
+      <p>提醒：餐廳營業時間、休店日與預約規則，出發前再確認一次。</p>
+    </section>
+
+    <section class="days" aria-label="八天行程">
+      <article class="day">
+        <div class="day-head"><h2>Day 1｜抵達東京</h2><span class="date">東京車站・銀座</span></div>
+        <div class="stop"><time>14:00</time><div><p class="place">成田機場 → 飯店</p><p class="note">搭乘示意交通工具進市區，先寄放行李、稍作休息。</p><p class="note">交通：成田特快 N’EX → JR 東京站，再步行至飯店</p></div></div>
+        <div class="stop"><time>17:00</time><div><p class="place">東京車站</p><p class="note">欣賞紅磚車站外觀，順便熟悉周邊街區。</p><p class="note">交通：JR 線或步行</p></div></div>
+        <div class="stop"><time>19:00</time><div><p class="place">銀平 KITTE 丸之內店</p><p class="note">品嚐和歌山風魚料理、刺身與海鮮御膳，作為第一頓東京晚餐。</p><p class="note">交通：東京 Metro 丸之內線，東京站下車後步行約 1 分鐘</p></div></div>
+      </article>
+
+      <article class="day">
+        <div class="day-head"><h2>Day 2｜淺草・晴空塔</h2><span class="date">下町散步</span></div>
+        <div class="stop"><time>09:00</time><div><p class="place">淺草寺・雷門</p><p class="note">逛仲見世通與淺草寺，感受東京經典下町風景。</p><p class="note">交通：東京 Metro 銀座線至淺草站，再步行</p></div></div>
+        <div class="stop"><time>12:30</time><div><p class="place">淺草むぎとろ 本店</p><p class="note">品嚐創業於昭和 4 年的名物麥飯山藥（むぎとろ），感受老字號和食。</p><p class="note">交通：從淺草寺步行，或淺草站 1–5 分鐘步行</p></div></div>
+        <div class="stop"><time>15:00</time><div><p class="place">東京晴空塔</p><p class="note">登塔看城市全景，晴天可遠眺富士山方向。</p><p class="note">交通：東武晴空塔線，東京晴空塔站下車</p></div></div>
+        <div class="stop"><time>18:30</time><div><p class="place">すしざんまい 東京スカイツリータウン・ソラマチ店</p><p class="note">用江戶前壽司與新鮮海鮮收尾，吃完還能繼續逛晴空塔城。</p><p class="note">交通：從東京晴空塔步行</p></div></div>
+      </article>
+
+      <article class="day">
+        <div class="day-head"><h2>Day 3｜上野・秋葉原</h2><span class="date">文化與次文化</span></div>
+        <div class="stop"><time>09:30</time><div><p class="place">上野公園</p><p class="note">在公園散步，依體力選擇美術館或博物館。</p><p class="note">交通：JR 山手線至上野站，再步行</p></div></div>
+        <div class="stop"><time>12:30</time><div><p class="place">上野 すしざんまい 上野店</p><p class="note">在阿美橫町附近享用平價壽司與鮪魚料理，適合中午快速用餐。</p><p class="note">交通：從上野公園步行至上野站周邊</p></div></div>
+        <div class="stop"><time>15:00</time><div><p class="place">秋葉原電器街</p><p class="note">探索電玩、動漫與特色店舖，逛街時間彈性安排。</p><p class="note">交通：JR 山手線，上野站至秋葉原站</p></div></div>
+        <div class="stop"><time>19:00</time><div><p class="place">麵屋武藏 武仁</p><p class="note">以濃厚湯頭與招牌大塊「武仁肉」拉麵，體驗秋葉原的人氣麵食。</p><p class="note">交通：JR 秋葉原站昭和通口步行約 3 分鐘</p></div></div>
+      </article>
+
+      <article class="day">
+        <div class="day-head"><h2>Day 4｜明治神宮・澀谷</h2><span class="date">東京流行地標</span></div>
+        <div class="stop"><time>09:00</time><div><p class="place">明治神宮</p><p class="note">穿過林蔭參道，參拜並享受市中心難得的安靜。</p><p class="note">交通：JR 山手線至原宿站，再步行</p></div></div>
+        <div class="stop"><time>11:30</time><div><p class="place">原宿竹下通</p><p class="note">逛年輕人流行小店，買些輕巧又好帶的點心。</p><p class="note">交通：從明治神宮步行</p></div></div>
+        <div class="stop"><time>14:00</time><div><p class="place">まい泉 青山本店</p><p class="note">在老字號日式炸豬排店享用酥脆豬排與定食，位置靠近表參道。</p><p class="note">交通：從表參道站步行約 5–8 分鐘</p></div></div>
+        <div class="stop"><time>17:00</time><div><p class="place">澀谷十字路口・SHIBUYA SKY</p><p class="note">從高處看澀谷街景，再到十字路口感受人潮。</p><p class="note">交通：東京 Metro 半藏門線，表參道站至澀谷站</p></div></div>
+      </article>
+
+      <article class="day">
+        <div class="day-head"><h2>Day 5｜築地・銀座</h2><span class="date">美食與購物</span></div>
+        <div class="stop"><time>08:30</time><div><p class="place">築地場外市場</p><p class="note">早起吃海鮮丼與玉子燒，逛逛市場小店。</p><p class="note">交通：東京 Metro 日比谷線至築地站，再步行</p></div></div>
+        <div class="stop"><time>11:30</time><div><p class="place">濱離宮恩賜庭園</p><p class="note">在庭園與池畔散步，讓行程稍微放慢。</p><p class="note">交通：都營大江戶線，築地市場站至汐留站，再步行</p></div></div>
+        <div class="stop"><time>14:30</time><div><p class="place">すしざんまい 本店</p><p class="note">到築地老字號壽司店品嚐鮪魚與江戶前壽司，再前往銀座購物。</p><p class="note">交通：東京 Metro 日比谷線至築地站，再步行約 3 分鐘</p></div></div>
+        <div class="stop"><time>18:30</time><div><p class="place">鳥ぎん 銀座本店</p><p class="note">品嚐備長炭燒鳥與現點現炊的釜飯，感受銀座老店的傳統味道。</p><p class="note">交通：從歌舞伎座步行，或銀座站 A5 出口步行</p></div></div>
+      </article>
+
+      <article class="day">
+        <div class="day-head"><h2>Day 6｜吉祥寺・中目黑</h2><span class="date">生活感散步</span></div>
+        <div class="stop"><time>10:00</time><div><p class="place">井之頭公園</p><p class="note">沿著湖畔散步，享受吉祥寺舒服的生活氣氛。</p><p class="note">交通：JR 中央線至吉祥寺站，再步行</p></div></div>
+        <div class="stop"><time>12:30</time><div><p class="place">ホープ軒本舗 吉祥寺店</p><p class="note">吃一碗從昭和屋台風格延續下來的東京豚骨醬油中華拉麵。</p><p class="note">交通：從井之頭公園步行至吉祥寺站北口</p></div></div>
+        <div class="stop"><time>15:30</time><div><p class="place">中目黑・代官山</p><p class="note">沿目黑川散步，看選物店與特色咖啡店。</p><p class="note">交通：JR 山手線至惠比壽站，再步行或轉東急東橫線</p></div></div>
+        <div class="stop"><time>19:00</time><div><p class="place">たつや 駅前店</p><p class="note">在惠比壽老牌居酒屋吃炭火燒鳥、串燒，感受上班族下班後的熱鬧氣氛。</p><p class="note">交通：JR 惠比壽站東口步行約 2 分鐘</p></div></div>
+      </article>
+
+      <article class="day">
+        <div class="day-head"><h2>Day 7｜台場・東京灣</h2><span class="date">海灣夜景</span></div>
+        <div class="stop"><time>10:00</time><div><p class="place">台場海濱公園</p><p class="note">看彩虹大橋與東京灣景色，海邊慢慢拍照。</p><p class="note">交通：百合海鷗線至台場海濱公園站</p></div></div>
+        <div class="stop"><time>12:30</time><div><p class="place">権八 お台場</p><p class="note">在東京灣景觀座位享用手打蕎麥麵、串燒與天婦羅，適合旅程最後一天。</p><p class="note">交通：百合海鷗線台場站步行約 2 分鐘，Aqua City 4F</p></div></div>
+        <div class="stop"><time>15:00</time><div><p class="place">teamLab Borderless：示意</p><p class="note">安排沉浸式展覽體驗，預留充足參觀時間。</p><p class="note">交通：百合海鷗線至青海站，再步行</p></div></div>
+        <div class="stop"><time>19:00</time><div><p class="place">東京灣夜景</p><p class="note">找個看得到夜景的位置，享受旅程最後一晚。</p><p class="note">交通：百合海鷗線至台場站，再步行</p></div></div>
+      </article>
+
+      <article class="day">
+        <div class="day-head"><h2>Day 8｜返程</h2><span class="date">最後採買</span></div>
+        <div class="stop"><time>09:00</time><div><p class="place">飯店周邊早餐</p><p class="note">悠閒吃早餐、整理行李，確認護照與戰利品。</p><p class="note">交通：步行</p></div></div>
+        <div class="stop"><time>11:00</time><div><p class="place">東京車站伴手禮</p><p class="note">採買東京香蕉或車站限定商品，留作旅程紀念。</p><p class="note">交通：JR 線或東京 Metro 至東京站</p></div></div>
+        <div class="stop"><time>14:00</time><div><p class="place">前往成田機場</p><p class="note">預留交通與報到時間，平安踏上回家的路。</p><p class="note">交通：成田特快 N’EX 或機場巴士</p></div></div>
+      </article>
+    </section>
+    <section class="day" aria-label="行前提醒">
+      <div class="day-head"><h2>行前提醒</h2><span class="date">示意資訊</span></div>
+      <div class="stop"><time>天氣</time><div><p class="place">晴時多雲，約 18–24°C</p></div></div>
+      <div class="stop"><time>要帶的東西</time><div><p class="place">護照、充電器、薄外套、舒適鞋子</p></div></div>
+      <div class="stop"><time>集合時間</time><div><p class="place">每日 09:00，飯店大廳集合</p></div></div>
+    </section>
+    <footer>時間與店名皆為示意，出發前再一起確認最新資訊。</footer>
+  </main>
+  <dialog id="guide-dialog" aria-labelledby="guide-title">
+    <div class="guide">
+      <button class="guide-close" type="button" aria-label="關閉">×</button>
+      <h2 id="guide-title">行程示意</h2>
+      <p id="guide-transport"></p>
+      <iframe id="route-map" class="route-map" title="Google 地圖" loading="lazy" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+      <p class="map-fallback">地圖若載入較慢，請稍候片刻；內容會留在這個頁面內顯示。</p>
+      <p>地圖為外部 Google Maps 資源，實際站點與轉乘時間出發前再確認。</p>
+    </div>
+  </dialog>
+  <script>
+    const dialog = document.querySelector('#guide-dialog');
+    const title = document.querySelector('#guide-title');
+    const transport = document.querySelector('#guide-transport');
+    const map = document.querySelector('#route-map');
+    document.querySelectorAll('.stop').forEach((stop) => {
+      const place = stop.querySelector('.place');
+      const notes = [...stop.querySelectorAll('.note')];
+      const route = notes.find((note) => note.textContent.trim().startsWith('交通：'));
+      if (!place || !route) return;
+      const button = document.createElement('button');
+      button.className = 'guide-button';
+      button.type = 'button';
+      button.textContent = '查看景點／路線示意';
+      button.addEventListener('click', () => {
+        title.textContent = place.textContent;
+        transport.textContent = route.textContent;
+        const query = encodeURIComponent(`${place.textContent} 東京`);
+        map.src = `https://www.google.com/maps?q=${query}&output=embed`;
+        dialog.showModal();
+      });
+      stop.querySelector('div').append(button);
+    });
+    document.querySelector('.guide-close').addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', (event) => { if (event.target === dialog) dialog.close(); });
+  </script>
+</body>
+</html>
