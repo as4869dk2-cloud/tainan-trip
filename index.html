@@ -47,6 +47,8 @@
     .vote-results li:last-child { border-bottom:0; }
     .vote-count { color:var(--color-primary); font-weight:700; }
     .vote-status { min-height:1.7em; margin:6px 0 0; color:var(--color-primary); }
+    .close-poll { margin-top:16px; padding-top:14px; border-top:1px dashed color-mix(in srgb,var(--color-text) 16%,var(--color-background)); }
+    .close-poll form { display:grid; gap:10px; }
     .snack-list { margin:12px 0 4px; border:1px solid color-mix(in srgb,var(--color-text) 16%,var(--color-background)); border-radius:12px; background:var(--color-background); }
     .snack-list summary { padding:10px 12px; color:var(--color-primary); font-weight:700; cursor:pointer; }
     .snack-list[open] summary { border-bottom:1px dashed color-mix(in srgb,var(--color-text) 16%,var(--color-background)); }
@@ -170,6 +172,14 @@
       </form>
       <p id="vote-status" class="vote-status" role="status" aria-live="polite"></p>
       <ul id="vote-results" class="vote-results" aria-label="晚餐票數"></ul>
+      <div id="close-poll-controls" class="close-poll">
+        <form id="close-poll-form">
+          <label for="close-passphrase">結束投票（主揪用）</label>
+          <input id="close-passphrase" name="passphrase" type="password" maxlength="40" required autocomplete="off">
+          <button type="submit">結束投票</button>
+        </form>
+        <p id="close-poll-status" class="vote-status" role="status" aria-live="polite"></p>
+      </div>
     </section>
 
     <section class="days" aria-label="八天行程">
@@ -294,6 +304,19 @@
     const voteOptions = [...document.querySelectorAll('#vote-option option')].map((option) => option.value);
     const voteResults = document.querySelector('#vote-results');
     const voteStatus = document.querySelector('#vote-status');
+    const voteForm = document.querySelector('#dinner-vote-form');
+    const closeControls = document.querySelector('#close-poll-controls');
+    const closeForm = document.querySelector('#close-poll-form');
+    const closeStatus = document.querySelector('#close-poll-status');
+    const showPollState = (closed) => {
+      voteForm.hidden = closed;
+      closeControls.hidden = closed;
+      voteStatus.textContent = closed ? '投票已結束' : '';
+    };
+    const loadPollState = async () => {
+      const { data, error } = await supabaseClient.from('poll_status').select('is_closed').eq('id', 1).single();
+      if (!error) showPollState(data.is_closed);
+    };
     const renderVotes = (votes) => {
       const counts = Object.fromEntries(voteOptions.map((option) => [option, 0]));
       votes.forEach(({ option }) => { if (option in counts) counts[option] += 1; });
@@ -309,8 +332,10 @@
       renderVotes(data);
     };
     loadVotes();
+    loadPollState();
     supabaseClient.channel('dinner-votes').on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'dinner_votes' }, loadVotes).subscribe();
-    document.querySelector('#dinner-vote-form').addEventListener('submit', async (event) => {
+    supabaseClient.channel('poll-status').on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'poll_status' }, ({ new: row }) => showPollState(row.is_closed)).subscribe();
+    voteForm.addEventListener('submit', async (event) => {
       event.preventDefault();
       const form = event.currentTarget;
       const button = form.querySelector('button');
@@ -322,6 +347,18 @@
       form.reset();
       voteStatus.textContent = '投票完成！';
       loadVotes();
+    });
+    closeForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const button = closeForm.querySelector('button');
+      button.disabled = true;
+      closeStatus.textContent = '確認中⋯';
+      const { error } = await supabaseClient.functions.invoke('close-poll', { body: { passphrase: closeForm.passphrase.value } });
+      button.disabled = false;
+      if (error) { closeStatus.textContent = '密語錯誤，投票仍開放。'; return; }
+      closeForm.reset();
+      await loadPollState();
+      closeStatus.textContent = '';
     });
     const checksByStop = new Map();
     const updateCheckbox = (stopId, checked) => {
