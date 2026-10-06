@@ -24,6 +24,8 @@
     .today-controls select, .today-controls button { min-height:40px; padding:7px 12px; border:1px solid var(--color-primary); border-radius:10px; background:var(--color-background); color:var(--color-text); font:inherit; font-size:17px; }
     .today-controls button { cursor:pointer; }
     .today-controls button[aria-pressed="true"] { background:var(--color-primary); color:var(--color-background); }
+    .today-controls { position:sticky; top:10px; z-index:5; box-shadow:0 4px 14px color-mix(in srgb,var(--color-text) 8%,transparent); }
+    .today-progress { margin-left:auto; color:var(--color-primary); font-weight:700; white-space:nowrap; }
     .overview { margin-top:20px; background:var(--color-background); border:1px solid color-mix(in srgb,var(--color-text) 16%,var(--color-background)); border-radius:18px 14px 20px 12px; padding:18px 18px 14px; box-shadow:0 4px 14px color-mix(in srgb,var(--color-text) 8%,transparent); transform:rotate(.35deg); }
     .overview h2 { margin:0 0 8px; color:var(--color-primary); font-size:1.3rem; }
     .overview p { margin:5px 0; font-size:17px; }
@@ -42,11 +44,13 @@
     .dinner-vote input, .dinner-vote select, .dinner-vote button { min-height:42px; padding:7px 12px; border:1px solid var(--color-primary); border-radius:10px; background:var(--color-background); color:var(--color-text); font:inherit; font-size:17px; }
     .dinner-vote button { cursor:pointer; color:var(--color-background); background:var(--color-primary); }
     .dinner-vote button:disabled { opacity:.6; cursor:wait; }
+    :where(button, select, input, summary):focus-visible { outline:3px solid color-mix(in srgb,var(--color-primary) 55%,white); outline-offset:2px; }
     .vote-results { margin:14px 0 0; padding:0; list-style:none; }
     .vote-results li { display:flex; justify-content:space-between; gap:12px; padding:6px 0; border-bottom:1px dashed color-mix(in srgb,var(--color-text) 16%,var(--color-background)); }
     .vote-results li:last-child { border-bottom:0; }
     .vote-count { color:var(--color-primary); font-weight:700; }
     .vote-status { min-height:1.7em; margin:6px 0 0; color:var(--color-primary); }
+    .vote-total { margin:10px 0 0; color:var(--color-primary); font-weight:700; }
     .close-poll { margin-top:16px; padding-top:14px; border-top:1px dashed color-mix(in srgb,var(--color-text) 16%,var(--color-background)); }
     .close-poll form { display:grid; gap:10px; }
     .snack-list { margin:12px 0 4px; border:1px solid color-mix(in srgb,var(--color-text) 16%,var(--color-background)); border-radius:12px; background:var(--color-background); }
@@ -61,6 +65,9 @@
     .days { display:grid; gap:24px; margin-top:20px; }
     .day { background:transparent; border:0; border-radius:0; padding:0; box-shadow:none; }
     .day-head { display:flex; align-items:baseline; justify-content:space-between; gap:12px; border-bottom:2px solid var(--color-primary); padding:0 4px 10px; margin-bottom:12px; }
+    .day-head h2 { flex:1; }
+    .day-toggle { border:0; background:transparent; color:var(--color-primary); font:inherit; font-size:17px; font-weight:700; cursor:pointer; padding:6px 4px; }
+    .day.is-collapsed > :not(.day-head) { display:none; }
     h2 { margin:0; color:var(--color-primary); font-size:1.35rem; }
     .date { color:var(--color-text); font-size:17px; white-space:nowrap; }
     .stop { display:grid; grid-template-columns:76px 1fr; gap:12px; margin-bottom:12px; padding:16px; background:color-mix(in srgb,var(--color-background) 88%,var(--color-primary)); border:1px solid color-mix(in srgb,var(--color-primary) 12%,var(--color-background)); border-radius:16px; box-shadow:0 3px 10px color-mix(in srgb,var(--color-text) 9%,transparent); }
@@ -92,6 +99,10 @@
     .share-qr { margin-top:20px; padding:16px; text-align:center; background:var(--color-background); border:1px solid color-mix(in srgb,var(--color-text) 16%,var(--color-background)); border-radius:16px; }
     .share-qr p { margin:0 0 10px; color:var(--color-primary); font-weight:700; }
     .share-qr img { display:block; width:min(180px, 60vw); height:auto; margin:0 auto; border-radius:8px; }
+    .quick-actions { position:fixed; right:14px; bottom:14px; z-index:6; display:grid; gap:8px; }
+    .quick-actions button { min-width:44px; min-height:44px; border:1px solid var(--color-primary); border-radius:999px; background:var(--color-background); color:var(--color-primary); font:inherit; font-weight:700; box-shadow:0 4px 14px color-mix(in srgb,var(--color-text) 18%,transparent); cursor:pointer; }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } }
+    html { scroll-behavior:smooth; }
     footer { color:var(--color-text); font-size:17px; text-align:center; margin-top:22px; }
     @media (max-width:420px) { main { width:calc(100% - 24px); } header { min-height:260px; background-position:58% center; } header > * { max-width:68%; } .stop { grid-template-columns:62px 1fr; gap:9px; padding:16px; } .stop > div { padding-left:16px; } .place { font-size:17px; } .budget-row { gap:8px; } }
     @media (min-width:560px) { main { padding-top:36px; } header { padding:34px 32px 30px; } .day { padding:0; } }
@@ -112,6 +123,7 @@
         <option value="5">Day 5</option><option value="6">Day 6</option><option value="7">Day 7</option><option value="8">Day 8</option>
       </select>
       <button id="today-toggle" type="button" aria-pressed="false">只看今天</button>
+      <span id="today-progress" class="today-progress" aria-live="polite"></span>
     </section>
 
     <section class="overview" aria-label="行程概述">
@@ -171,6 +183,7 @@
         <button type="submit">送出投票</button>
       </form>
       <p id="vote-status" class="vote-status" role="status" aria-live="polite"></p>
+      <p id="vote-total" class="vote-total" aria-live="polite">票數載入中⋯</p>
       <ul id="vote-results" class="vote-results" aria-label="晚餐票數"></ul>
       <div id="close-poll-controls" class="close-poll">
         <form id="close-poll-form">
@@ -274,6 +287,10 @@
       <p>地圖為外部 Google Maps 資源，實際站點與轉乘時間出發前再確認。</p>
     </div>
   </dialog>
+  <nav class="quick-actions" aria-label="快速操作">
+    <button id="back-to-today" type="button" title="回到今天行程">今天</button>
+    <button id="back-to-top" type="button" title="回到頁面頂端">頂端</button>
+  </nav>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
     document.body.classList.add('reveal-ready');
@@ -281,12 +298,17 @@
     const stops = [...document.querySelectorAll('.days .stop')];
     const todayDay = document.querySelector('#today-day');
     const todayToggle = document.querySelector('#today-toggle');
+    const todayProgress = document.querySelector('#today-progress');
     const savedDay = localStorage.getItem('tokyo-trip-day') || '1';
     const savedTodayOnly = localStorage.getItem('tokyo-trip-today-only') === 'true';
     todayDay.value = savedDay;
     const applyTodayFilter = () => {
       const onlyToday = todayToggle.getAttribute('aria-pressed') === 'true';
       daySections.forEach((day, index) => { day.hidden = onlyToday && String(index + 1) !== todayDay.value; });
+      const visibleDay = daySections.find((day, index) => String(index + 1) === todayDay.value);
+      const done = visibleDay ? visibleDay.querySelectorAll('.stop-check:checked').length : 0;
+      const total = visibleDay ? visibleDay.querySelectorAll('.stop-check').length : 0;
+      todayProgress.textContent = total ? `完成 ${done}/${total}` : '';
     };
     todayToggle.setAttribute('aria-pressed', String(savedTodayOnly));
     todayDay.addEventListener('change', () => { localStorage.setItem('tokyo-trip-day', todayDay.value); applyTodayFilter(); });
@@ -296,6 +318,13 @@
       localStorage.setItem('tokyo-trip-today-only', String(next));
       applyTodayFilter();
     });
+    document.querySelector('#back-to-today').addEventListener('click', () => {
+      todayToggle.setAttribute('aria-pressed', 'true');
+      localStorage.setItem('tokyo-trip-today-only', 'true');
+      applyTodayFilter();
+      document.querySelector('.days')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+    document.querySelector('#back-to-top').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
     applyTodayFilter();
     const supabaseClient = window.supabase.createClient(
       'https://hffpxtjnspvaoxqxchhd.supabase.co',
@@ -304,6 +333,7 @@
     const voteOptions = [...document.querySelectorAll('#vote-option option')].map((option) => option.value);
     const voteResults = document.querySelector('#vote-results');
     const voteStatus = document.querySelector('#vote-status');
+    const voteTotal = document.querySelector('#vote-total');
     const voteForm = document.querySelector('#dinner-vote-form');
     const closeControls = document.querySelector('#close-poll-controls');
     const closeForm = document.querySelector('#close-poll-form');
@@ -320,7 +350,9 @@
     const renderVotes = (votes) => {
       const counts = Object.fromEntries(voteOptions.map((option) => [option, 0]));
       votes.forEach(({ option }) => { if (option in counts) counts[option] += 1; });
-      voteResults.replaceChildren(...voteOptions.map((option) => {
+      const ranked = [...voteOptions].sort((a, b) => counts[b] - counts[a]);
+      voteTotal.textContent = `目前共 ${votes.length} 票`;
+      voteResults.replaceChildren(...ranked.map((option) => {
         const item = document.createElement('li');
         item.innerHTML = `<span>${option}</span><span class="vote-count">${counts[option]} 票</span>`;
         return item;
@@ -328,7 +360,7 @@
     };
     const loadVotes = async () => {
       const { data, error } = await supabaseClient.from('dinner_votes').select('option');
-      if (error) { voteStatus.textContent = '票數載入失敗，請稍後再試。'; return; }
+      if (error) { voteStatus.textContent = '票數載入失敗，請稍後再試。'; voteTotal.textContent = '目前無法取得票數'; return; }
       renderVotes(data);
     };
     loadVotes();
@@ -376,9 +408,11 @@
         const checked = checkbox.checked;
         const { error } = await supabaseClient.from('trip_stop_checks').upsert({ stop_id: stopId, checked, updated_at: new Date().toISOString() });
         if (error) checkbox.checked = !checked;
+        applyTodayFilter();
       });
       stop.querySelector('.place')?.prepend(checkbox);
     });
+    applyTodayFilter();
     (async () => {
       const { data, error } = await supabaseClient.from('trip_stop_checks').select('stop_id, checked');
       if (!error) data.forEach(({ stop_id, checked }) => updateCheckbox(stop_id, checked));
@@ -399,6 +433,22 @@
       if (revealObserver) revealObserver.observe(stop);
       else stop.classList.add('is-visible');
     });
+    daySections.forEach((day) => {
+      const heading = day.querySelector('.day-head h2');
+      if (!heading) return;
+      const toggle = document.createElement('button');
+      toggle.className = 'day-toggle';
+      toggle.type = 'button';
+      toggle.setAttribute('aria-expanded', 'true');
+      toggle.textContent = '收合';
+      toggle.addEventListener('click', () => {
+        const collapsed = day.classList.toggle('is-collapsed');
+        toggle.setAttribute('aria-expanded', String(!collapsed));
+        toggle.textContent = collapsed ? '展開' : '收合';
+      });
+      day.querySelector('.day-head').append(toggle);
+    });
+    document.querySelectorAll('img').forEach((image) => { image.loading = 'lazy'; });
     const foodPlaces = ['銀平','むぎとろ','すしざんまい','麵屋','まい泉','築地場外市場','鳥ぎん','ホープ軒','たつや','権八','飯店周邊早餐'];
     const dessertPlaces = ['伴手禮','PARIS','バターステイツ','甜點','Aqua City'];
     const transportPlaces = ['→','前往成田機場'];
