@@ -58,6 +58,9 @@
     .guide-close { float:right; border:0; background:transparent; color:var(--muted); font-size:1.4rem; cursor:pointer; }
     .route-map { display:block; width:100%; height:280px; margin:16px 0 10px; border:1px dashed var(--line); border-radius:14px; background:#fffaf0; }
     .map-fallback { color:var(--muted); font-size:.85rem; }
+    .share-qr { margin-top:20px; padding:16px; text-align:center; background:#fffaf0; border:1px solid var(--line); border-radius:16px; }
+    .share-qr p { margin:0 0 10px; color:var(--accent); font-weight:700; }
+    .share-qr img { display:block; width:min(180px, 60vw); height:auto; margin:0 auto; border-radius:8px; }
     footer { color:var(--muted); font-size:.82rem; text-align:center; margin-top:22px; }
     @media (max-width:420px) { .stop { grid-template-columns:62px 1fr; gap:9px; padding-left:0; padding-right:0; } .stop > div { padding-left:16px; } .place { font-size:1rem; } .note { font-size:.86rem; } .budget-row { gap:8px; } .budget-row span:last-child { font-size:.84rem; } }
     @media (min-width:560px) { main { padding-top:36px; } header { padding:34px 32px 30px; } .day { padding-left:22px; padding-right:22px; } }
@@ -81,6 +84,7 @@
       <p><strong>Day 6</strong> 吉祥寺・井之頭公園・中目黑</p>
       <p><strong>Day 7</strong> 台場・teamLab・東京灣夜景</p>
       <p><strong>Day 8</strong> 最後採買・前往機場</p>
+      <p><strong>集合地點</strong> 松山機場</p>
     </section>
 
     <section class="budget" aria-label="費用小抄">
@@ -188,6 +192,10 @@
       <div class="stop"><time>天氣</time><div><p class="place">晴時多雲，約 18–24°C</p></div></div>
       <div class="stop"><time>要帶的東西</time><div><p class="place">護照、充電器、薄外套、舒適鞋子</p></div></div>
       <div class="stop"><time>集合時間</time><div><p class="place">每日 09:00，飯店大廳集合</p></div></div>
+    </section>
+    <section class="share-qr" aria-label="分享網站">
+      <p>掃描 QR 碼分享這份遊程</p>
+      <img src="images/tainan-trip-qr.png" alt="東京旅遊網站 QR 碼">
     </section>
     <footer>時間與店名皆為示意，出發前再一起確認最新資訊。</footer>
   </main>
